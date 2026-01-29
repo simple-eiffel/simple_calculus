@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simple_calculus - Numerical Calculus Library</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div style="font-size: 3rem;">📐</div>
+        </div>
+        <h1>simple_calculus</h1>
+        <p class="tagline">Production-ready numerical calculus library for Eiffel</p>
+        <div class="badges">
+            <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
+            <img src="https://img.shields.io/badge/Eiffel-25.02-purple.svg" alt="Eiffel 25.02">
+            <img src="https://img.shields.io/badge/DBC-Contracts-green.svg" alt="Design by Contract">
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="quick.html">Quick API</a></li>
+            <li><a href="user-guide.html">User Guide</a></li>
+            <li><a href="api-reference.html">API Reference</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="cookbook.html">Cookbook</a></li>
+            <li><a href="https://github.com/simple-eiffel/simple_calculus">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>
+                <strong>simple_calculus</strong> is a production-ready numerical calculus library for Eiffel
+                providing derivatives, integrals, and partial derivatives with verified accuracy.
+            </p>
+            <p>
+                It offers three-tier API design (simple/advanced/expert), adaptive algorithms with automatic
+                step size selection, and convergence analysis through three-method comparison.
+            </p>
+            <p>
+                Part of the <a href="https://github.com/simple-eiffel">Simple Eiffel</a> ecosystem.
+            </p>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <ul>
+                <li><strong>Tier 1 API</strong> — Simple interface for derivatives, integrals, and partial derivatives</li>
+                <li><strong>Tier 2 API</strong> — Advanced control with method selection and error bounds</li>
+                <li><strong>Tier 3 API</strong> — Expert access to computation engines for research use</li>
+                <li><strong>Adaptive Algorithms</strong> — Automatic step size and tolerance management</li>
+                <li><strong>Convergence Analysis</strong> — Three-method comparison for derivative accuracy</li>
+                <li><strong>SCOOP Compatible</strong> — Immutable results enable concurrent use</li>
+                <li><strong>Design by Contract</strong> — All methods fully specified with pre/postconditions</li>
+                <li><strong>Zero Warnings</strong> — Void-safe implementation compiled with all assertions enabled</li>
+            </ul>
+        </section>
+
+        <section id="status">
+            <h2>Status</h2>
+            <p><strong>v1.0.0 - Production Ready</strong></p>
+            <ul>
+                <li>45 tests passing (100% pass rate)</li>
+                <li>Design by Contract throughout</li>
+                <li>Void-safe (void_safety="all")</li>
+                <li>SCOOP compatible (concurrency support)</li>
+                <li>Adversarial and stress testing completed</li>
+            </ul>
+        </section>
+
+        <section id="quick-example">
+            <h2>Quick Example</h2>
+            <p>Compute the derivative of f(x) = x² at x = 1:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    Result := l_calc.derivative (l_f, 1.0)  -- Returns ~2.0
+end</code></pre>
+            <p>See <a href="quick.html">Quick API</a> for more examples.</p>
+        </section>
+
+        <section id="installation">
+            <h2>Installation</h2>
+            <p>Add simple_calculus to your ECF configuration file:</p>
+            <pre><code>&lt;library name="simple_calculus" location="$SIMPLE_EIFFEL/simple_calculus/simple_calculus.ecf"/&gt;</code></pre>
+            <p>Then use in your code:</p>
+            <pre><code>create l_calc</code></pre>
+        </section>
+
+        <section id="documentation">
+            <h2>Documentation</h2>
+            <ul>
+                <li><a href="quick.html"><strong>Quick API Reference</strong></a> — Fast overview with essential operations</li>
+                <li><a href="user-guide.html"><strong>User Guide</strong></a> — Comprehensive guide with examples and best practices</li>
+                <li><a href="api-reference.html"><strong>Complete API Reference</strong></a> — Full documentation for all classes and features</li>
+                <li><a href="architecture.html"><strong>Architecture</strong></a> — Design decisions and system overview</li>
+                <li><a href="cookbook.html"><strong>Cookbook</strong></a> — Code recipes and common patterns</li>
+            </ul>
+        </section>
+
+        <section id="getting-help">
+            <h2>Getting Help</h2>
+            <ul>
+                <li><strong>Documentation:</strong> <a href="https://simple-eiffel.github.io/simple_calculus/">simple-eiffel.github.io/simple_calculus/</a></li>
+                <li><strong>GitHub:</strong> <a href="https://github.com/simple-eiffel/simple_calculus">github.com/simple-eiffel/simple_calculus</a></li>
+                <li><strong>Issues:</strong> <a href="https://github.com/simple-eiffel/simple_calculus/issues">GitHub Issues</a></li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Simple Eiffel Contributors. MIT License.</p>
+            <p><a href="https://github.com/simple-eiffel/simple_calculus">View on GitHub</a></p>
+        </footer>
+    </main>
+</body>
+</html>

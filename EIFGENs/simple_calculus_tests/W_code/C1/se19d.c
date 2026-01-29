@@ -1,0 +1,101 @@
+/*
+ * Class SED_ERROR_FACTORY
+ */
+
+#include "eif_macros.h"
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+static const EIF_TYPE_INDEX egt_0_19 [] = {0xFF01,270,0xFFFF};
+static const EIF_TYPE_INDEX egt_1_19 [] = {0xFF01,292,18,0xFFFF};
+static const EIF_TYPE_INDEX egt_2_19 [] = {0xFF01,18,0xFFFF};
+static const EIF_TYPE_INDEX egt_3_19 [] = {0,0xFFFF};
+static const EIF_TYPE_INDEX egt_4_19 [] = {0,0xFFFF};
+static const EIF_TYPE_INDEX egt_5_19 [] = {0xFF01,18,0xFFFF};
+static const EIF_TYPE_INDEX egt_6_19 [] = {0xFF01,18,0xFFFF};
+static const EIF_TYPE_INDEX egt_7_19 [] = {0,0xFFFF};
+static const EIF_TYPE_INDEX egt_8_19 [] = {0xFF01,33,0xFFFF};
+static const EIF_TYPE_INDEX egt_9_19 [] = {0xFF01,270,0xFFFF};
+static const EIF_TYPE_INDEX egt_10_19 [] = {0xFF01,270,0xFFFF};
+static const EIF_TYPE_INDEX egt_11_19 [] = {0xFF01,32,0xFFFF};
+static const EIF_TYPE_INDEX egt_12_19 [] = {0xFF01,18,0xFFFF};
+static const EIF_TYPE_INDEX egt_13_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_14_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_15_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_16_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_17_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_18_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_19_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_20_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_21_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_22_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_23_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_24_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_25_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_26_19 [] = {0xFF01,17,0xFFFF};
+static const EIF_TYPE_INDEX egt_27_19 [] = {0xFF01,171,0xFFFF};
+
+
+static const struct desc_info desc_19[] = {
+	{EIF_GENERIC(NULL), 0xFFFFFFFF, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_0_19), 0, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_1_19), 1, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 2, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 3, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 4, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 5, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 6, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 7, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 8, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x0209 /*260*/), 9, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_2_19), 10, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 11, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 12, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_3_19), 13, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_4_19), 14, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_5_19), 15, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_6_19), 16, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_7_19), 17, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 18, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 19, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_8_19), 20, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_9_19), 21, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_10_19), 22, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 23, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_11_19), 24, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 25, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 26, 0xFFFFFFFF},
+	{EIF_GENERIC(NULL), 27, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x25 /*18*/), 28, 0xFFFFFFFF},
+	{EIF_NON_GENERIC(0x020F /*263*/), 29, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_12_19), 30, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_13_19), 465, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_14_19), 466, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_15_19), 467, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_16_19), 468, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_17_19), 469, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_18_19), 470, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_19_19), 471, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_20_19), 472, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_21_19), 458, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_22_19), 459, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_23_19), 460, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_24_19), 461, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_25_19), 462, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_26_19), 463, 0xFFFFFFFF},
+	{EIF_GENERIC(egt_27_19), 464, 0xFFFFFFFF},
+};
+void Init19(void)
+{
+	IDSC(desc_19, 0, 18);
+	IDSC(desc_19 + 1, 4, 18);
+	IDSC(desc_19 + 32, 177, 18);
+}
+
+
+#ifdef __cplusplus
+}
+#endif

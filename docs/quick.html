@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick API Reference - simple_calculus</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>simple_calculus</h1>
+        <p class="tagline">Quick API Reference</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="#quick-examples">Quick Examples</a></li>
+            <li><a href="user-guide.html">User Guide</a></li>
+            <li><a href="api-reference.html">Full API</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="cookbook.html">Cookbook</a></li>
+            <li><a href="https://github.com/simple-eiffel/simple_calculus">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="quick-examples">
+            <h2>Quick Examples</h2>
+
+            <h3>1. Compute Derivative (Tier 1)</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: REAL_64
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    l_result := l_calc.derivative (l_f, 1.0)
+    -- l_result is approximately 2.0 (derivative of x^2 at x=1)
+end</code></pre>
+
+            <h3>2. Compute Integral (Tier 1)</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: REAL_64
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x end
+    l_result := l_calc.integrate (l_f, 0.0, 1.0)
+    -- l_result is approximately 0.5 (integral of x from 0 to 1)
+end</code></pre>
+
+            <h3>3. Compute with Error Bounds (Tier 2)</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: DERIVATIVE_RESULT
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    l_result := l_calc.derivative_with_options (l_f, 1.0, 4, 1.0e-6)
+    -- l_result.value: computed derivative
+    -- l_result.error_bound: estimated error
+    -- l_result.convergence_status: CONVERGED/WARNING/FAILED
+end</code></pre>
+
+            <h3>4. Compute Partial Derivative (Tier 1)</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [ARRAY [REAL_64], REAL_64]
+    l_point: ARRAY [REAL_64]
+    l_result: REAL_64
+do
+    create l_calc
+    -- f(x,y) = x^2 + y^2, compute ∂f/∂x at (1,1)
+    l_f := agent (v: ARRAY [REAL_64]): REAL_64
+        do Result := v[1]*v[1] + v[2]*v[2] end
+    create l_point.make_filled (0.0, 1, 2)
+    l_point[1] := 1.0
+    l_point[2] := 1.0
+    l_result := l_calc.partial_derivative (l_f, l_point, 1)
+end</code></pre>
+
+            <h3>5. Compute Gradient (Tier 2)</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [ARRAY [REAL_64], REAL_64]
+    l_point: ARRAY [REAL_64]
+    l_grad: ARRAY [REAL_64]
+do
+    create l_calc
+    l_f := agent (v: ARRAY [REAL_64]): REAL_64
+        do Result := v[1]*v[1] + v[2]*v[2] end
+    create l_point.make_filled (0.0, 1, 2)
+    l_point[1] := 1.0
+    l_point[2] := 2.0
+    l_grad := l_calc.gradient (l_f, l_point)
+    -- l_grad[1] ≈ 2.0 (∂f/∂x = 2x at x=1)
+    -- l_grad[2] ≈ 4.0 (∂f/∂y = 2y at y=2)
+end</code></pre>
+
+            <h3>6. Expert API - Direct Engine Access (Tier 3)</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_engine: DERIVATIVE_CALCULATOR
+    l_f: FUNCTION [REAL_64, REAL_64]
+do
+    create l_calc
+    l_engine := l_calc.create_derivative_calculator
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    -- Access three different methods directly
+    Result := l_engine.forward_difference (l_f, 1.0)
+    Result := l_engine.backward_difference (l_f, 1.0)
+    Result := l_engine.central_difference (l_f, 1.0)
+end</code></pre>
+        </section>
+
+        <section id="common-operations">
+            <h2>Common Operations</h2>
+
+            <h3>API Tiers</h3>
+            <ul>
+                <li><strong>Tier 1 (Simple)</strong> — `derivative`, `integrate`, `partial_derivative`, `gradient`
+                    <br/>Returns single values or arrays
+                </li>
+                <li><strong>Tier 2 (Advanced)</strong> — `derivative_with_options`, `integrate_with_options`
+                    <br/>Returns DERIVATIVE_RESULT or INTEGRAL_RESULT with error bounds and status
+                </li>
+                <li><strong>Tier 3 (Expert)</strong> — `create_derivative_calculator`, `create_integral_calculator`
+                    <br/>Direct engine access for research and custom algorithms
+                </li>
+            </ul>
+
+            <h3>Methods</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Purpose</th>
+                        <th>Returns</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>derivative (f, x)</td>
+                        <td>Compute df/dx at point x</td>
+                        <td>REAL_64</td>
+                    </tr>
+                    <tr>
+                        <td>integrate (f, a, b)</td>
+                        <td>Compute ∫[a,b] f(x)dx</td>
+                        <td>REAL_64</td>
+                    </tr>
+                    <tr>
+                        <td>partial_derivative (f, point, i)</td>
+                        <td>Compute ∂f/∂x_i at point</td>
+                        <td>REAL_64</td>
+                    </tr>
+                    <tr>
+                        <td>gradient (f, point)</td>
+                        <td>Compute all ∂f/∂x_i</td>
+                        <td>ARRAY [REAL_64]</td>
+                    </tr>
+                    <tr>
+                        <td>derivative_with_options (f, x, method, tol)</td>
+                        <td>Derivative with control</td>
+                        <td>DERIVATIVE_RESULT</td>
+                    </tr>
+                    <tr>
+                        <td>integrate_with_options (f, a, b, method, tol)</td>
+                        <td>Integration with control</td>
+                        <td>INTEGRAL_RESULT</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Derivative Methods (for derivative_with_options)</h3>
+            <ul>
+                <li><strong>1</strong> = Forward difference</li>
+                <li><strong>2</strong> = Backward difference</li>
+                <li><strong>3</strong> = Central difference</li>
+                <li><strong>4</strong> = All three with comparison (recommended)</li>
+            </ul>
+
+            <h3>Integration Methods (for integrate_with_options)</h3>
+            <ul>
+                <li><strong>1</strong> = Trapezoidal rule (simple, less accurate)</li>
+                <li><strong>2</strong> = Simpson's rule (moderate accuracy)</li>
+                <li><strong>3</strong> = Adaptive Simpson (recommended, highest accuracy)</li>
+            </ul>
+        </section>
+
+        <section id="result-types">
+            <h2>Result Types</h2>
+
+            <h3>DERIVATIVE_RESULT</h3>
+            <pre><code>-- Features:
+-- value: REAL_64 - computed derivative
+-- error_bound: REAL_64 - estimated error
+-- convergence_status: INTEGER - CONVERGED/WARNING/FAILED
+-- is_converged: BOOLEAN - true if CONVERGED
+-- is_warning: BOOLEAN - true if WARNING
+-- is_failed: BOOLEAN - true if FAILED</code></pre>
+
+            <h3>INTEGRAL_RESULT</h3>
+            <pre><code>-- Features:
+-- value: REAL_64 - computed integral
+-- error_bound: REAL_64 - estimated error
+-- iterations: INTEGER - number of iterations performed
+-- is_accurate: BOOLEAN - true if error_bound < 1e-5</code></pre>
+        </section>
+
+        <section id="next-steps">
+            <h2>Next Steps</h2>
+            <ul>
+                <li>See <a href="user-guide.html"><strong>User Guide</strong></a> for detailed explanations and best practices</li>
+                <li>See <a href="api-reference.html"><strong>Complete API Reference</strong></a> for all features and contracts</li>
+                <li>See <a href="cookbook.html"><strong>Cookbook</strong></a> for more code examples and recipes</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Simple Eiffel Contributors. MIT License.</p>
+            <p><a href="https://github.com/simple-eiffel/simple_calculus">View on GitHub</a></p>
+        </footer>
+    </main>
+</body>
+</html>

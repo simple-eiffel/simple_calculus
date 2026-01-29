@@ -1,0 +1,116 @@
+# Pre-Phase Research Evidence
+# Project: simple_calculus
+# Date: 2026-01-29
+
+## Research Completion Status
+
+Research completed: YES
+Steps completed: 7/7 (+ REFERENCES.md bonus)
+
+## Files Delivered
+
+1. ✅ 01-SCOPE.md (Problem statement, target users, success criteria)
+2. ✅ 02-LANDSCAPE.md (3+ alternatives researched with real URLs)
+3. ✅ 03-REQUIREMENTS.md (10 FR + 6 NFR, prioritized, testable)
+4. ✅ 04-DECISIONS.md (5 major design decisions, options evaluated)
+5. ✅ 05-INNOVATIONS.md (4 novel approaches vs existing solutions)
+6. ✅ 06-RISKS.md (5 risks identified with mitigations)
+7. ✅ 07-RECOMMENDATION.md (BUILD recommendation with HIGH confidence)
+8. ✅ REFERENCES.md (Bonus: full reference list with learning outcomes)
+
+## Research Quality Metrics
+
+References cited: 8+ (NumPy, SciPy, GSL, Boost Math, papers, Stack Overflow)
+Alternatives researched: 3 (NumPy/SciPy, GNU GSL, Boost Math)
+Requirements defined: 16 (10 functional, 6 non-functional)
+Decisions documented: 5 (with options, rationale, reversibility)
+Risks identified: 5 (with likelihood, impact, mitigations)
+Innovations documented: 4 (vs existing solutions)
+
+## Recommendation
+
+**Action:** BUILD
+**Confidence:** HIGH
+
+**Rationale:**
+1. Gap exists - Eiffel ecosystem has no calculus library
+2. MVP viable - Numerical methods well-understood, implementable in pure Eiffel
+3. Use case validated - Physics simulations (wave equation, Maxwell, Schrödinger) need derivatives/integrals
+4. API design clear - Agent-based function passing is idiomatic Eiffel
+5. Error control possible - Design by Contract catches issues early
+
+## Scope Summary
+
+### In Scope (MVP - v1.0.0)
+- Numerical derivatives (forward, backward, central difference)
+- Numerical integration (trapezoidal, Simpson's rule)
+- Error estimation for both operations
+- Partial derivatives for multi-variable functions
+- Adaptive step size selection
+
+### Deferred to Phase 2+
+- Automatic differentiation (forward/reverse mode)
+- Symbolic differentiation rules
+- Adaptive quadrature (advanced)
+- C-optimized performance paths
+
+## Key Design Decisions
+
+D-001: Numerical primary (symbolic deferred)
+D-002: Adaptive h selection (no fixed step size)
+D-003: Trapezoidal + Simpson's (no advanced quadrature)
+D-004: Agent-based functions (Eiffel idiomatic)
+D-005: Skip MML for numerics (light weight)
+
+## Risk Management
+
+5 risks identified:
+- RISK-001: Ill-conditioned functions (MEDIUM/MEDIUM) → Mitigated with error bounds
+- RISK-002: Performance on high derivatives (MEDIUM/MEDIUM) → Focus on 1st derivatives
+- RISK-003: Discontinuous integration (MEDIUM/HIGH) → Preconditions validate smoothness
+- RISK-004: Symbolic conflict (LOW/MEDIUM) → Design compatible interface
+- RISK-005: Eiffel performance (LOW/MEDIUM) → Correctness first, optimize if needed
+
+## Dependencies
+
+### Required
+- simple_math (basic arithmetic)
+- base (ISE allowed - fundamental types)
+- testing (ISE allowed - EQA_TEST_SET)
+
+### Future Integrations
+- simple_probability (stochastic integration)
+- simple_montecarlo (MC integration)
+- simple_linalg (Jacobian matrices)
+- simple_ode (for Phase 2)
+
+## Simple_* First Policy Validation
+
+✅ Checked ecosystem - no simple_calculus exists
+✅ Checked ISE stdlib - no native calculus library
+✅ Checked Gobo - no calculus support
+✅ Conclusion: Must BUILD
+
+## Success Criteria Status
+
+All criteria defined and measurable:
+- Derivative accuracy: < 1e-6 relative error (testable)
+- Integration accuracy: < 1e-5 relative error (testable)
+- Test coverage: 50+ unit tests (countable)
+- Void safety: void_safety="all" (compiler-enforced)
+- SCOOP: concurrency="scoop" (compiler-enforced)
+- Documentation: GitHub Pages site (deliverable)
+
+## Next Steps
+
+1. ✅ Research COMPLETE
+2. ⏳ Run `/eiffel.spec` to transform research into 8-step specification
+3. ⏳ Run `/eiffel.intent` to capture refined intent
+4. ⏳ Run `/eiffel.contracts` through `/eiffel.ship` for full workflow
+
+## Overall Assessment
+
+Research is COMPREHENSIVE, EVIDENCE-BASED, and ACTIONABLE.
+No critical gaps identified. Ready to proceed to specification phase.
+
+Status: RESEARCH_COMPLETE - Ready for /eiffel.spec

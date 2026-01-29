@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system name="simple_calculus" uuid="12345678-1234-5678-1234-567890ABCDEF">
+	<description>
+		Numerical calculus library: derivatives, integrals, and partial derivatives.
+		Design by Contract: preconditions validate function smoothness, postconditions provide error estimates.
+	</description>
+
+	<target name="simple_calculus">
+		<root class="SIMPLE_CALCULUS" feature="default_create"/>
+		<capability>
+			<concurrency support="scoop"/>
+			<void_safety support="all"/>
+		</capability>
+		<setting name="console_application" value="false"/>
+		<setting name="library_root" value="./"/>
+
+		<library name="base" location="$ISE_LIBRARY/library/base/base.ecf"/>
+		<library name="simple_math" location="$SIMPLE_EIFFEL/simple_math/simple_math.ecf"/>
+
+		<cluster name="src" location="./src" recursive="true"/>
+	</target>
+
+	<target name="simple_calculus_tests" extends="simple_calculus">
+		<root class="TEST_APP" feature="make"/>
+		<library name="testing" location="$ISE_LIBRARY/library/testing/testing.ecf"/>
+		<cluster name="test" location="./test" recursive="true"/>
+	</target>
+</system>

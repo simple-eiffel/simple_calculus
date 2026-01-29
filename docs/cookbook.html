@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookbook - simple_calculus</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>simple_calculus</h1>
+        <p class="tagline">Code Recipes & Examples</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="quick.html">Quick API</a></li>
+            <li><a href="user-guide.html">User Guide</a></li>
+            <li><a href="api-reference.html">API Reference</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="#recipes">Cookbook</a></li>
+            <li><a href="https://github.com/simple-eiffel/simple_calculus">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="recipes">
+            <h2>Code Recipes</h2>
+
+            <h3>Recipe 1: Find a Root Using Newton's Method</h3>
+            <p>Find where f(x) = 0 using f'(x):</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_x: REAL_64
+    l_i: INTEGER
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64
+        do Result := x*x - 2.0 end  -- f(x) = x^2 - 2
+
+    l_x := 1.0  -- Initial guess
+    from l_i := 1 until l_i > 10 or (l_f.item(l_x)).abs < 1.0e-6 loop
+        -- x_new = x - f(x) / f'(x)
+        l_x := l_x - (l_f.item(l_x)) / l_calc.derivative(l_f, l_x)
+        l_i := l_i + 1
+    end
+    -- l_x ≈ 1.414 (square root of 2)
+end</code></pre>
+
+            <h3>Recipe 2: Gradient Descent Optimization</h3>
+            <p>Minimize objective function using gradients:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_objective: FUNCTION [ARRAY [REAL_64], REAL_64]
+    l_point: ARRAY [REAL_64]
+    l_grad: ARRAY [REAL_64]
+    l_step_size: REAL_64
+    l_i: INTEGER
+do
+    create l_calc
+    -- Minimize f(x,y) = x^2 + y^2
+    l_objective := agent (v: ARRAY [REAL_64]): REAL_64
+        do Result := v[1]*v[1] + v[2]*v[2] end
+
+    create l_point.make_filled (1.0, 1, 2)  -- Start at (1, 1)
+    l_step_size := 0.01
+
+    from l_i := 1 until l_i > 100 loop
+        l_grad := l_calc.gradient(l_objective, l_point)
+        -- Update: p = p - step_size * gradient
+        l_point[1] := l_point[1] - l_step_size * l_grad[1]
+        l_point[2] := l_point[2] - l_step_size * l_grad[2]
+        l_i := l_i + 1
+    end
+    -- l_point ≈ [0, 0] (minimum)
+end</code></pre>
+
+            <h3>Recipe 3: Area Under Curve (Physics)</h3>
+            <p>Compute displacement from velocity curve:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_velocity: FUNCTION [REAL_64, REAL_64]
+    l_displacement: REAL_64
+do
+    create l_calc
+    -- Velocity v(t) = 5*t (m/s), t in [0, 2] seconds
+    l_velocity := agent (t: REAL_64): REAL_64
+        do Result := 5.0 * t end
+
+    -- Displacement = ∫[0,2] v(t) dt
+    l_displacement := l_calc.integrate(l_velocity, 0.0, 2.0)
+    -- l_displacement ≈ 10 meters
+end</code></pre>
+
+            <h3>Recipe 4: Numerical ODE Integration</h3>
+            <p>Solve dy/dt = f(y,t) using Euler method with derivatives:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_deriv_f: FUNCTION [REAL_64, REAL_64]
+    l_y: REAL_64
+    l_t: REAL_64
+    l_dt: REAL_64
+do
+    create l_calc
+    -- dy/dt = -y (exponential decay), y(0) = 1
+    l_deriv_f := agent (y: REAL_64): REAL_64
+        do Result := -y end
+
+    l_y := 1.0
+    l_t := 0.0
+    l_dt := 0.1
+
+    from until l_t >= 2.0 loop
+        l_y := l_y + l_dt * l_deriv_f.item(l_y)
+        l_t := l_t + l_dt
+    end
+    -- l_y ≈ 0.135 (close to e^(-2))
+end</code></pre>
+
+            <h3>Recipe 5: Verify Convergence</h3>
+            <p>Check if numerical derivative is reliable:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: DERIVATIVE_RESULT
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64
+        do Result := x * x * x end  -- f(x) = x^3
+
+    -- Use Tier 2 to get convergence status
+    l_result := l_calc.derivative_with_options(l_f, 1.0, 4, 1.0e-6)
+
+    if l_result.is_converged then
+        -- All three methods agree - result is reliable
+        Result := l_result.value
+    else
+        -- Methods disagree - function may not be smooth
+        -- Try different point or reconsider function
+    end
+end</code></pre>
+
+            <h3>Recipe 6: High-Precision Integration</h3>
+            <p>Get very accurate integral for critical calculation:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: INTEGRAL_RESULT
+do
+    create l_calc
+    -- f(x) = sin(x)
+    l_f := agent (x: REAL_64): REAL_64
+        local l_math: SIMPLE_MATH
+        do
+            create l_math.make
+            Result := l_math.sin(x)
+        end
+
+    -- Use very tight tolerance for high precision
+    l_result := l_calc.integrate_with_options(l_f, 0.0, 3.14159, 3, 1.0e-12)
+
+    if l_result.is_accurate then
+        Result := l_result.value  -- ≈ 2.0 (integral of sin from 0 to π)
+    end
+end</code></pre>
+
+            <h3>Recipe 7: Validate Function with Multiple Points</h3>
+            <p>Verify derivative consistency across domain:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_x: REAL_64
+    l_deriv: REAL_64
+    l_all_valid: BOOLEAN
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+
+    l_all_valid := True
+    l_x := 0.1
+    from until l_x > 5.0 loop
+        l_deriv := l_calc.derivative(l_f, l_x)
+        if l_deriv.is_nan then
+            l_all_valid := False
+        end
+        -- Expected: f'(x) = 2x
+        l_x := l_x + 0.5
+    end
+end</code></pre>
+        </section>
+
+        <section id="common-patterns">
+            <h2>Common Patterns</h2>
+
+            <h3>Pattern: Safe Derivative Computation</h3>
+            <pre><code>-- Always check for NaN and handle Void cases
+local
+    l_result: REAL_64
+do
+    if l_calc /= Void and l_f /= Void then
+        l_result := l_calc.derivative(l_f, x)
+        if not l_result.is_nan then
+            -- Safe to use result
+        else
+            -- Handle error
+        end
+    end
+end</code></pre>
+
+            <h3>Pattern: Tier Selection Based on Accuracy</h3>
+            <pre><code>if requires_high_accuracy then
+    -- Use Tier 2 with tight tolerance
+    l_result := l_calc.derivative_with_options(l_f, x, 4, 1.0e-10)
+else
+    -- Use Tier 1 for speed
+    l_result_val := l_calc.derivative(l_f, x)
+end</code></pre>
+
+            <h3>Pattern: Iterative Refinement</h3>
+            <pre><code>-- Tighten tolerance until convergence
+local
+    l_tol: REAL_64
+do
+    l_tol := 1.0e-5
+    from until l_result.is_converged or l_tol < 1.0e-12 loop
+        l_result := l_calc.derivative_with_options(l_f, x, 4, l_tol)
+        l_tol := l_tol / 10.0
+    end
+end</code></pre>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+
+            <h3>1. Check Convergence Status</h3>
+            <pre><code>-- For derivatives, always check status
+l_result := l_calc.derivative_with_options(...)
+if not l_result.is_converged then
+    -- Handle potential inaccuracy
+end</code></pre>
+
+            <h3>2. Choose Right Tolerance</h3>
+            <ul>
+                <li>Default (1.0e-5 to 1.0e-6) — Most applications</li>
+                <li>Loose (1.0e-3) — Fast approximation</li>
+                <li>Tight (1.0e-10) — High precision (slower)</li>
+            </ul>
+
+            <h3>3. Avoid Discontinuities</h3>
+            <p>Don't compute derivatives at discontinuities or sharp corners.</p>
+
+            <h3>4. Use Appropriate Method</h3>
+            <ul>
+                <li>Forward difference — When point is near boundary</li>
+                <li>Backward difference — When point is near boundary</li>
+                <li>Central difference — Most accurate (default)</li>
+                <li>All with comparison — When uncertain</li>
+            </ul>
+
+            <h3>5. Profile Your Function</h3>
+            <pre><code>-- Compute derivatives at test points to verify behavior
+l_result1 := l_calc.derivative(l_f, 0.5)
+l_result2 := l_calc.derivative(l_f, 1.0)
+l_result3 := l_calc.derivative(l_f, 2.0)
+-- Check results make sense</code></pre>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Simple Eiffel Contributors. MIT License.</p>
+            <p><a href="https://github.com/simple-eiffel/simple_calculus">View on GitHub</a></p>
+        </footer>
+    </main>
+</body>
+</html>

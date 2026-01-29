@@ -1,0 +1,53 @@
+# Phase 0 Intent Evidence
+# Project: simple_calculus
+# Date: 2026-01-29 14:35 UTC
+
+## Completion Status
+
+Intent document: .eiffel-workflow/intent-v2.md
+AI review conducted: YES
+AI used for review: Claude Code (local, in-process)
+Questions answered: 7 (all clarifications resolved)
+User approved: YES
+
+## Intent Versions
+
+intent.md (v1): Initial intent from specification
+intent-v2.md (v2): Refined intent incorporating AI review answers
+
+## Decisions Locked In
+
+✅ MML Decision: NO (pure scalar computation, no collections)
+✅ simple_* First: ENFORCED (only simple_math + ISE allowed)
+✅ Void Safety: ALL (void_safety="all" in ECF)
+✅ SCOOP Compatible: YES (stateless facades)
+
+## AI Review Answers
+
+1. Adaptive step size scaling: Keep simple formula, document assumption (|f(x)| ~ O(1))
+2. Method comparison: All three computed, status based on agreement (CONVERGED/WARNING/FAILED)
+3. Error estimation: Comparison between methods (no extra function evals)
+4. Jacobian timing: Phase 2 (partial derivatives in Phase 1)
+5. Tier 3 expert access: Factory method (create_derivative_calculator)
+6. Monte Carlo integration: Tier 2 option flag (Phase 2 implementation)
+7. Test functions: Standard numerical analysis set (x², x³, sin, cos, exp, ln)
+
+## Key Clarifications
+
+- Adaptive h = sqrt(ε) × max(|x|, 1.0) with assumption |f(x)| ~ O(1)
+- Error bound = max(|f'_fwd - f'_cent|, |f'_bwd - f'_cent|) computed for free
+- CONVERGENCE_STATUS: CONVERGED (all agree), WARNING (2 agree), FAILED (all differ)
+- Phase 1: partial_derivative only; Phase 2: Jacobian assembly convenience
+- Test accuracy: Standard 6 functions across scales [1e-10, 1e10]
+- Phase 1 focused on 1st derivatives; Phase 2 adds higher-order
+
+## Status
+
+PHASE 0 COMPLETE: Intent refined and approved.
+
+✅ All ambiguities clarified
+✅ All decisions documented
+✅ AI review completed locally
+✅ intent-v2.md ready for Phase 1
+
+Next Phase: /eiffel.contracts simple_calculus

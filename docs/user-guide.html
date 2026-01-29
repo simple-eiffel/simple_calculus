@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - simple_calculus</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>simple_calculus</h1>
+        <p class="tagline">User Guide</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="quick.html">Quick API</a></li>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="api-reference.html">API Reference</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="cookbook.html">Cookbook</a></li>
+            <li><a href="https://github.com/simple-eiffel/simple_calculus">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                simple_calculus provides three-tier numerical calculus capabilities for Eiffel:
+                derivatives, integrals, and partial derivatives with verified accuracy.
+            </p>
+            <p>
+                <strong>Key features:</strong>
+            </p>
+            <ul>
+                <li>Adaptive algorithms with automatic step size and tolerance management</li>
+                <li>Three-method comparison for derivative accuracy verification</li>
+                <li>Design by Contract with full preconditions and postconditions</li>
+                <li>SCOOP-compatible with immutable results for concurrent use</li>
+                <li>100% test coverage with adversarial and stress testing</li>
+            </ul>
+        </section>
+
+        <section id="use-cases">
+            <h2>Use Cases</h2>
+            <ul>
+                <li><strong>Scientific Computing</strong> — Numerical analysis and simulations</li>
+                <li><strong>Optimization</strong> — Gradient-based algorithms and root-finding</li>
+                <li><strong>Machine Learning</strong> — Backpropagation and gradient descent</li>
+                <li><strong>Engineering</strong> — Mechanical and electrical system analysis</li>
+                <li><strong>Physics Simulation</strong> — Differential equation solving</li>
+            </ul>
+        </section>
+
+        <section id="installation">
+            <h2>Installation</h2>
+            <p>1. Add to your ECF configuration:</p>
+            <pre><code>&lt;library name="simple_calculus" location="$SIMPLE_EIFFEL/simple_calculus/simple_calculus.ecf"/&gt;</code></pre>
+            <p>2. Create instance in your code:</p>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+do
+    create l_calc</code></pre>
+            <p>3. Start using the Tier 1 API or explore advanced options.</p>
+        </section>
+
+        <section id="tier1-simple-api">
+            <h2>Tier 1: Simple API</h2>
+            <p>
+                Tier 1 provides the simplest interface, ideal for most users. All functions handle
+                algorithm selection, step size, and tolerance automatically.
+            </p>
+
+            <h3>Computing Derivatives</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    Result := l_calc.derivative (l_f, 2.0)  -- f'(2) for f(x)=x^2
+end</code></pre>
+            <p>
+                The derivative is computed using the central difference method with automatic
+                step size selection based on machine precision and argument magnitude.
+            </p>
+
+            <h3>Computing Integrals</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := 1.0 / (1.0 + x*x) end
+    Result := l_calc.integrate (l_f, -1.0, 1.0)
+    -- Approximate value of pi/2
+end</code></pre>
+            <p>
+                Integration uses adaptive Simpson's rule with Richardson extrapolation,
+                automatically refining the solution until tolerance is achieved.
+            </p>
+
+            <h3>Computing Partial Derivatives</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [ARRAY [REAL_64], REAL_64]
+    l_point: ARRAY [REAL_64]
+do
+    create l_calc
+    -- f(x,y,z) = x^2 + y^2 + z^2
+    l_f := agent (v: ARRAY [REAL_64]): REAL_64
+        do Result := v[1]*v[1] + v[2]*v[2] + v[3]*v[3] end
+    create l_point.make_filled (0.0, 1, 3)
+    l_point[1] := 1.0
+    l_point[2] := 2.0
+    l_point[3] := 3.0
+    -- Compute ∂f/∂x at point (1, 2, 3)
+    Result := l_calc.partial_derivative (l_f, l_point, 1)
+end</code></pre>
+
+            <h3>Computing Gradient</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [ARRAY [REAL_64], REAL_64]
+    l_point: ARRAY [REAL_64]
+    l_grad: ARRAY [REAL_64]
+do
+    create l_calc
+    l_f := agent (v: ARRAY [REAL_64]): REAL_64
+        do Result := v[1]*v[1] + v[2]*v[2] end
+    create l_point.make_filled (0.0, 1, 2)
+    l_point[1] := 1.0
+    l_point[2] := 2.0
+    l_grad := l_calc.gradient (l_f, l_point)
+    -- l_grad[1] ≈ 2.0, l_grad[2] ≈ 4.0
+end</code></pre>
+        </section>
+
+        <section id="tier2-advanced-api">
+            <h2>Tier 2: Advanced API</h2>
+            <p>
+                Tier 2 provides control over method selection and tolerance, returning detailed
+                result objects with error bounds and convergence status.
+            </p>
+
+            <h3>Method Selection</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: DERIVATIVE_RESULT
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    -- Method 4 uses all three methods with automatic comparison
+    l_result := l_calc.derivative_with_options (l_f, 1.0, 4, 1.0e-6)
+
+    if l_result.is_converged then
+        -- All methods agree
+        Result := l_result.value
+    elseif l_result.is_warning then
+        -- Two methods agree, one differs (still usable with caution)
+        Result := l_result.value
+    else
+        -- All methods disagree significantly (unreliable)
+        -- Should reconsider function smoothness
+    end
+end</code></pre>
+
+            <h3>Tolerance Control</h3>
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_f: FUNCTION [REAL_64, REAL_64]
+    l_result: INTEGRAL_RESULT
+do
+    create l_calc
+    l_f := agent (x: REAL_64): REAL_64 do Result := x * x end
+    -- Tighter tolerance (more accurate but slower)
+    l_result := l_calc.integrate_with_options (l_f, 0.0, 1.0, 3, 1.0e-10)
+
+    if l_result.is_accurate then
+        Result := l_result.value
+    end
+end</code></pre>
+        </section>
+
+        <section id="tier3-expert-api">
+            <h2>Tier 3: Expert API</h2>
+            <p>
+                Tier 3 provides direct access to computation engines for research, custom algorithms,
+                and performance-critical applications.
+            </p>
+
+            <pre><code>local
+    l_calc: SIMPLE_CALCULUS
+    l_deriv_engine: DERIVATIVE_CALCULATOR
+    l_integral_engine: INTEGRAL_CALCULATOR
+do
+    create l_calc
+    l_deriv_engine := l_calc.create_derivative_calculator
+    l_integral_engine := l_calc.create_integral_calculator
+
+    -- Use engines directly
+    Result := l_deriv_engine.forward_difference (agent sin, 0.5)
+    Result := l_deriv_engine.backward_difference (agent cos, 0.5)
+    Result := l_deriv_engine.central_difference (agent tan, 0.5)
+end</code></pre>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+
+            <h3>1. Function Smoothness</h3>
+            <p>
+                Numerical differentiation requires smooth functions. If your function has
+                discontinuities or sharp corners, results may be unreliable. Check convergence status.
+            </p>
+
+            <h3>2. Domain Selection</h3>
+            <p>
+                Choose integration and differentiation domains carefully. Avoid boundaries where
+                function behavior changes rapidly or where singularities exist.
+            </p>
+
+            <h3>3. Tolerance Selection</h3>
+            <ul>
+                <li><strong>1.0e-5 to 1.0e-6</strong> — Default, suitable for most applications</li>
+                <li><strong>1.0e-8 to 1.0e-10</strong> — High precision (slower computation)</li>
+                <li><strong>1.0e-3 to 1.0e-4</strong> — Fast approximation (may be inaccurate)</li>
+            </ul>
+
+            <h3>4. Error Validation</h3>
+            <pre><code>local l_result: DERIVATIVE_RESULT do
+    -- Always check convergence status
+    if not l_result.is_converged then
+        -- Handle unreliable result
+    end
+    -- Check error bound is acceptable
+    if l_result.error_bound > acceptable_error then
+        -- Tighten tolerance and retry
+    end
+end</code></pre>
+
+            <h3>5. SCOOP Usage</h3>
+            <p>
+                Results are immutable and SCOOP-safe. You can safely use them in parallel:
+            </p>
+            <pre><code>local
+    l_result: DERIVATIVE_RESULT
+    l_sep: separate DERIVATIVE_RESULT
+do
+    l_result := l_calc.derivative_with_options (...)
+    -- Safe to access from multiple threads
+end</code></pre>
+        </section>
+
+        <section id="common-patterns">
+            <h2>Common Patterns</h2>
+
+            <h3>Optimization via Gradient</h3>
+            <pre><code>-- Gradient descent step
+local
+    l_step_size: REAL_64
+    l_grad: ARRAY [REAL_64]
+do
+    l_grad := l_calc.gradient (objective, current_point)
+    l_step_size := 0.01
+    -- Update: point = point - step_size * gradient
+end</code></pre>
+
+            <h3>Root Finding via Derivative</h3>
+            <pre><code>-- Newton's method requires derivative
+local
+    l_f_value: REAL_64
+    l_f_deriv: REAL_64
+do
+    l_f_value := f (x)
+    l_f_deriv := l_calc.derivative (f, x)
+    -- Update: x = x - f(x) / f'(x)
+end</code></pre>
+        </section>
+
+        <section id="troubleshooting">
+            <h2>Troubleshooting</h2>
+
+            <h3>Derivative Returns NaN</h3>
+            <ul>
+                <li>Check that function accepts the point value</li>
+                <li>Verify function is continuous near the point</li>
+                <li>Try a different point away from discontinuities</li>
+            </ul>
+
+            <h3>Convergence Status is WARNING or FAILED</h3>
+            <ul>
+                <li>Function may not be smooth enough</li>
+                <li>Try Tier 2 API with different method</li>
+                <li>Tighten tolerance and retry</li>
+            </ul>
+
+            <h3>Integration Result is Inaccurate</h3>
+            <ul>
+                <li>Tighten tolerance (1.0e-10 instead of 1.0e-5)</li>
+                <li>Check integration bounds are reasonable</li>
+                <li>Verify function is well-behaved over domain</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Simple Eiffel Contributors. MIT License.</p>
+            <p><a href="https://github.com/simple-eiffel/simple_calculus">View on GitHub</a></p>
+        </footer>
+    </main>
+</body>
+</html>

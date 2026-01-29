@@ -1,0 +1,204 @@
+
+simple_calculus: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        partial â??f/â??x â?? 2.0 Â± 0.1:
+<000002C981BFD7D8>                         Developer exception.          Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        
+<000002C981BFD7D8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    raise @11              
+<000002C981BFD7D8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+DEVELOPER_EXCEPTION raise @2                                            
+<000002C981BFD708>  (From EXCEPTION)       Routine failure.              Fail
+-------------------------------------------------------------------------------
+EQA_ASSERTIONS      assert @7                                           
+<000002C981BFBB28>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    assert @2              
+<000002C981BFBAB8>  (From EQA_TEST_SET)    Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    test_partial_derivative_simple @8
+<000002C981BFBAB8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<000002C981BFD018>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<000002C981BFD018>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            safe_run_test @2                                    
+<000002C981BFB5E8>                         Routine failure.              Rescue
+-------------------------------------------------------------------------------
+TEST_APP            make @7                                             
+<000002C981BFB5E8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            root's creation                                     
+<000002C981BFB5E8>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+simple_calculus: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        partial â??f/â??x â?? 2.0 Â± 0.5:
+<0000020D05F637D8>                         Developer exception.          Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        
+<0000020D05F637D8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    raise @11              
+<0000020D05F637D8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+DEVELOPER_EXCEPTION raise @2                                            
+<0000020D05F63708>  (From EXCEPTION)       Routine failure.              Fail
+-------------------------------------------------------------------------------
+EQA_ASSERTIONS      assert @7                                           
+<0000020D05F61B28>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    assert @2              
+<0000020D05F61AB8>  (From EQA_TEST_SET)    Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    test_partial_derivative_simple @8
+<0000020D05F61AB8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<0000020D05F63018>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<0000020D05F63018>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            safe_run_test @2                                    
+<0000020D05F615E8>                         Routine failure.              Rescue
+-------------------------------------------------------------------------------
+TEST_APP            make @7                                             
+<0000020D05F615E8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            root's creation                                     
+<0000020D05F615E8>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+simple_calculus: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        partial derivative exists:
+<000001E67BEAD708>                         Developer exception.          Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        
+<000001E67BEAD708>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    raise @11              
+<000001E67BEAD708>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+DEVELOPER_EXCEPTION raise @2                                            
+<000001E67BEAD658>  (From EXCEPTION)       Routine failure.              Fail
+-------------------------------------------------------------------------------
+EQA_ASSERTIONS      assert @7                                           
+<000001E67BEABB28>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    assert @2              
+<000001E67BEABAB8>  (From EQA_TEST_SET)    Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    test_partial_derivative_simple @8
+<000001E67BEABAB8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<000001E67BEAD018>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<000001E67BEAD018>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            safe_run_test @2                                    
+<000001E67BEAB5E8>                         Routine failure.              Rescue
+-------------------------------------------------------------------------------
+TEST_APP            make @7                                             
+<000001E67BEAB5E8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            root's creation                                     
+<000001E67BEAB5E8>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+simple_calculus: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        â??f[0] â?? 2.0 Â± 0.1:
+<000001FFBCED8478>                         Developer exception.          Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    developer_raise        
+<000001FFBCED8478>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ISE_EXCEPTION_MANAGER
+                    raise @11              
+<000001FFBCED8478>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+DEVELOPER_EXCEPTION raise @2                                            
+<000001FFBCED83A8>  (From EXCEPTION)       Routine failure.              Fail
+-------------------------------------------------------------------------------
+EQA_ASSERTIONS      assert @7                                           
+<000001FFBCED4B28>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    assert @2              
+<000001FFBCED4AB8>  (From EQA_TEST_SET)    Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_SIMPLE_CALCULUS
+                    test_gradient @9       
+<000001FFBCED4AB8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<000001FFBCED7AB8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<000001FFBCED7AB8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            safe_run_test @2                                    
+<000001FFBCED45E8>                         Routine failure.              Rescue
+-------------------------------------------------------------------------------
+TEST_APP            make @11                                            
+<000001FFBCED45E8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+TEST_APP            root's creation                                     
+<000001FFBCED45E8>                         Routine failure.              Exit
+-------------------------------------------------------------------------------

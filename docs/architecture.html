@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - simple_calculus</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>simple_calculus</h1>
+        <p class="tagline">Architecture & Design</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="quick.html">Quick API</a></li>
+            <li><a href="user-guide.html">User Guide</a></li>
+            <li><a href="api-reference.html">API Reference</a></li>
+            <li><a href="#overview">Architecture</a></li>
+            <li><a href="cookbook.html">Cookbook</a></li>
+            <li><a href="https://github.com/simple-eiffel/simple_calculus">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>
+                simple_calculus uses a <strong>three-tier facade pattern</strong> with specialized
+                computation engines. This design provides simplicity for novices while enabling
+                expert-level control for research use.
+            </p>
+        </section>
+
+        <section id="design-patterns">
+            <h2>Design Patterns</h2>
+
+            <h3>Facade Pattern</h3>
+            <p>
+                <strong>SIMPLE_CALCULUS</strong> serves as the main facade, hiding complexity
+                of specialized engines while providing three-tier API:
+            </p>
+            <ul>
+                <li><strong>Tier 1 (Simple)</strong> — Default algorithm selection, easy-to-use interface</li>
+                <li><strong>Tier 2 (Advanced)</strong> — Method control, error bounds, convergence status</li>
+                <li><strong>Tier 3 (Expert)</strong> — Direct engine access for research and customization</li>
+            </ul>
+
+            <h3>Engine Pattern</h3>
+            <p>
+                <strong>DERIVATIVE_CALCULATOR</strong> and <strong>INTEGRAL_CALCULATOR</strong> implement
+                specialized algorithms:
+            </p>
+            <ul>
+                <li>Derivatives: forward, backward, central difference with comparison</li>
+                <li>Integrals: trapezoidal, Simpson's rule, adaptive refinement</li>
+            </ul>
+
+            <h3>Immutable Results Pattern</h3>
+            <p>
+                <strong>DERIVATIVE_RESULT</strong> and <strong>INTEGRAL_RESULT</strong> are immutable
+                data classes enabling safe concurrent access (SCOOP-compatible).
+            </p>
+
+            <h3>Strategy Pattern</h3>
+            <p>
+                Method selection in Tier 2 API uses strategy pattern: users choose computation strategy
+                (forward, backward, central, or all-with-comparison).
+            </p>
+        </section>
+
+        <section id="class-structure">
+            <h2>Class Structure</h2>
+
+            <pre><code>SIMPLE_CALCULUS (Facade)
+  ├── DERIVATIVE_CALCULATOR (Engine)
+  │   ├── STEP_SIZE_CALCULATOR
+  │   └── CONVERGENCE_ANALYZER
+  │       └── CONVERGENCE_STATUS
+  ├── INTEGRAL_CALCULATOR (Engine)
+  ├── DERIVATIVE_RESULT (Immutable Data)
+  │   └── CONVERGENCE_STATUS
+  └── INTEGRAL_RESULT (Immutable Data)</code></pre>
+        </section>
+
+        <section id="algorithms">
+            <h2>Algorithms</h2>
+
+            <h3>Derivatives</h3>
+            <ul>
+                <li><strong>Forward Difference</strong>: f'(x) ≈ (f(x+h) - f(x)) / h</li>
+                <li><strong>Backward Difference</strong>: f'(x) ≈ (f(x) - f(x-h)) / h</li>
+                <li><strong>Central Difference</strong>: f'(x) ≈ (f(x+h) - f(x-h)) / (2h) [most accurate]</li>
+            </ul>
+
+            <h3>Adaptive Step Size</h3>
+            <p>
+                Step size h is automatically computed based on machine precision and argument magnitude:
+            </p>
+            <pre><code>h = sqrt(machine_epsilon) × max(|x|, 1.0)</code></pre>
+            <p>
+                This ensures accurate differentiation across extreme scales (10^-15 to 10^15).
+            </p>
+
+            <h3>Convergence Analysis</h3>
+            <p>
+                Three methods are compared to verify accuracy:
+            </p>
+            <ul>
+                <li><strong>CONVERGED</strong> — All three agree within tolerance</li>
+                <li><strong>WARNING</strong> — Two methods agree, one differs (use with caution)</li>
+                <li><strong>FAILED</strong> — All disagree significantly (function may not be smooth)</li>
+            </ul>
+
+            <h3>Integrals</h3>
+            <ul>
+                <li><strong>Trapezoidal Rule</strong>: Simple, O(h²) error</li>
+                <li><strong>Simpson's Rule</strong>: Higher accuracy, O(h⁴) error</li>
+                <li><strong>Adaptive Simpson</strong>: Richardson extrapolation refinement until tolerance</li>
+            </ul>
+        </section>
+
+        <section id="scoop-design">
+            <h2>SCOOP Design</h2>
+            <p>
+                All features are SCOOP-compatible (concurrency support="scoop" in ECF):
+            </p>
+            <ul>
+                <li><strong>Immutable Results</strong> — DERIVATIVE_RESULT and INTEGRAL_RESULT are read-only</li>
+                <li><strong>No Shared State</strong> — Each computation is independent</li>
+                <li><strong>Thread-Safe</strong> — Factories can be called from multiple processors</li>
+            </ul>
+        </section>
+
+        <section id="performance">
+            <h2>Performance Characteristics</h2>
+
+            <h3>Derivatives</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Accuracy</th>
+                        <th>Speed</th>
+                        <th>Function Calls</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Forward Difference</td>
+                        <td>O(h)</td>
+                        <td>Fast</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Backward Difference</td>
+                        <td>O(h)</td>
+                        <td>Fast</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Central Difference</td>
+                        <td>O(h²)</td>
+                        <td>Fast</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>All with Comparison</td>
+                        <td>Highest</td>
+                        <td>Moderate</td>
+                        <td>6</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Integrals</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Accuracy</th>
+                        <th>Speed</th>
+                        <th>Iterations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Trapezoidal</td>
+                        <td>Low</td>
+                        <td>Very Fast</td>
+                        <td>Fixed (n)</td>
+                    </tr>
+                    <tr>
+                        <td>Simpson's</td>
+                        <td>Moderate</td>
+                        <td>Fast</td>
+                        <td>Fixed (n)</td>
+                    </tr>
+                    <tr>
+                        <td>Adaptive Simpson</td>
+                        <td>High</td>
+                        <td>Moderate</td>
+                        <td>Variable (automatic)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="void-safety">
+            <h2>Void Safety</h2>
+            <p>
+                All code is void-safe (void_safety="all" in ECF):
+            </p>
+            <ul>
+                <li>All references are attached by default (never Void)</li>
+                <li>Optional parameters use detachable with explicit checks</li>
+                <li>Results are always non-Void (guaranteed by postconditions)</li>
+            </ul>
+        </section>
+
+        <section id="design-decisions">
+            <h2>Design Decisions</h2>
+
+            <h3>Why Immutable Results?</h3>
+            <p>
+                Immutable results enable SCOOP usage without synchronization overhead.
+                Users can safely pass results between concurrent processors.
+            </p>
+
+            <h3>Why Three Tiers?</h3>
+            <p>
+                Simple users get easy-to-use interface (Tier 1). Advanced users gain control (Tier 2).
+                Researchers get direct engine access (Tier 3). Single library serves all skill levels.
+            </p>
+
+            <h3>Why Three-Method Comparison?</h3>
+            <p>
+                Unlike magnitude-based error estimation, three-method comparison directly verifies
+                accuracy by comparing results from different algorithms. If methods disagree,
+                the function may not be smooth enough for differentiation.
+            </p>
+
+            <h3>Why Adaptive Step Size?</h3>
+            <p>
+                Fixed step size (like h=0.001) fails at extreme scales. Our formula h = sqrt(ε) × max(|x|, 1.0)
+                automatically adapts to any magnitude, enabling accurate derivatives from 10^-15 to 10^15.
+            </p>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Simple Eiffel Contributors. MIT License.</p>
+            <p><a href="https://github.com/simple-eiffel/simple_calculus">View on GitHub</a></p>
+        </footer>
+    </main>
+</body>
+</html>
