@@ -28,13 +28,13 @@ feature -- Attributes
 
 feature -- Integration Methods
 
-	trapezoidal (f: FUNCTION [REAL_64, REAL_64]; a: REAL_64; b: REAL_64;
+	trapezoidal (a_f: FUNCTION [REAL_64, REAL_64]; a: REAL_64; b: REAL_64;
 				num_intervals: INTEGER): REAL_64
 			-- Compute integral using trapezoidal rule
 			-- ∫[a,b] f(x)dx ≈ (h/2) * [f(a) + 2*f(x_1) + 2*f(x_2) + ... + f(b)]
 			-- where h = (b - a) / n
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			a_less_b: a < b
 			a_valid: not a.is_nan
 			b_valid: not b.is_nan
@@ -46,11 +46,11 @@ feature -- Integration Methods
 			l_x: REAL_64
 		do
 			l_h := (b - a) / num_intervals
-			l_sum := (f.item (a) + f.item (b)) / 2.0
+			l_sum := (a_f.item (a) + a_f.item (b)) / 2.0
 
 			from i := 1 until i >= num_intervals loop
 				l_x := a + i * l_h
-				l_sum := l_sum + f.item (l_x)
+				l_sum := l_sum + a_f.item (l_x)
 				i := i + 1
 			end
 
@@ -59,13 +59,13 @@ feature -- Integration Methods
 			result_not_nan: not Result.is_nan
 		end
 
-	simpson (f: FUNCTION [REAL_64, REAL_64]; a: REAL_64; b: REAL_64;
+	simpson (a_f: FUNCTION [REAL_64, REAL_64]; a: REAL_64; b: REAL_64;
 			num_intervals: INTEGER): REAL_64
 			-- Compute integral using Simpson's rule
 			-- Requires even number of intervals
 			-- ∫[a,b] f(x)dx ≈ (h/3) * [f(a) + 4*f(x_1) + 2*f(x_2) + ... + f(b)]
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			a_less_b: a < b
 			a_valid: not a.is_nan
 			b_valid: not b.is_nan
@@ -77,19 +77,19 @@ feature -- Integration Methods
 			l_x: REAL_64
 		do
 			l_h := (b - a) / num_intervals
-			l_sum := f.item (a) + f.item (b)
+			l_sum := a_f.item (a) + a_f.item (b)
 
 			-- Odd indices (coefficient 4)
 			from i := 1 until i >= num_intervals loop
 				l_x := a + i * l_h
-				l_sum := l_sum + 4.0 * f.item (l_x)
+				l_sum := l_sum + 4.0 * a_f.item (l_x)
 				i := i + 2
 			end
 
 			-- Even indices (coefficient 2)
 			from i := 2 until i >= num_intervals loop
 				l_x := a + i * l_h
-				l_sum := l_sum + 2.0 * f.item (l_x)
+				l_sum := l_sum + 2.0 * a_f.item (l_x)
 				i := i + 2
 			end
 
@@ -98,12 +98,12 @@ feature -- Integration Methods
 			result_not_nan: not Result.is_nan
 		end
 
-	compute_adaptive (f: FUNCTION [REAL_64, REAL_64]; a: REAL_64; b: REAL_64;
+	compute_adaptive (a_f: FUNCTION [REAL_64, REAL_64]; a: REAL_64; b: REAL_64;
 					tolerance: REAL_64): INTEGRAL_RESULT
 			-- Compute integral with adaptive refinement until tolerance met
 			-- Uses Simpson's rule with Richardson extrapolation
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			a_less_b: a < b
 			a_valid: not a.is_nan
 			b_valid: not b.is_nan
@@ -116,7 +116,7 @@ feature -- Integration Methods
 			l_prev_result: REAL_64
 		do
 			l_intervals := 4  -- Start with 4 intervals
-			l_result := simpson (f, a, b, l_intervals)
+			l_result := simpson (a_f, a, b, l_intervals)
 			l_iterations := 0
 			l_prev_result := 0.0
 			l_error := tolerance + 1.0  -- Ensure loop starts
@@ -126,7 +126,7 @@ feature -- Integration Methods
 			loop
 				l_prev_result := l_result
 				l_intervals := l_intervals * 2
-				l_result := simpson (f, a, b, l_intervals)
+				l_result := simpson (a_f, a, b, l_intervals)
 				l_error := (l_result - l_prev_result).abs
 				l_iterations := l_iterations + 1
 			end

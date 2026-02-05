@@ -15,14 +15,14 @@ feature -- Constants
 
 feature -- Conversion
 
-	to_string (status: INTEGER): STRING
+	to_string (a_status: INTEGER): STRING
 			-- String representation of status
 		require
-			valid_status: status = converged or status = warning or status = failed
+			valid_status: a_status = converged or a_status = warning or a_status = failed
 		do
-			if status = converged then
+			if a_status = converged then
 				Result := "CONVERGED"
-			elseif status = warning then
+			elseif a_status = warning then
 				Result := "WARNING"
 			else
 				Result := "FAILED"

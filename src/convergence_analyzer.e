@@ -12,14 +12,14 @@ feature -- Constants
 
 feature -- Analysis
 
-	analyze (forward_deriv: REAL_64; backward_deriv: REAL_64; central_deriv: REAL_64;
+	analyze (a_forward_deriv: REAL_64; backward_deriv: REAL_64; central_deriv: REAL_64;
 			tolerance: REAL_64): CONVERGENCE_RESULT
 			-- Analyze convergence of three methods
 			-- Return status and error bound
 		require
 			tolerance_positive: tolerance > 0.0
 			tolerance_reasonable: tolerance >= 1.0e-12 and tolerance <= 1.0e-3
-			forward_valid: not forward_deriv.is_nan
+			forward_valid: not a_forward_deriv.is_nan
 			backward_valid: not backward_deriv.is_nan
 			central_valid: not central_deriv.is_nan
 		local
@@ -29,7 +29,7 @@ feature -- Analysis
 			l_status: INTEGER
 		do
 			-- Compute differences from central (most accurate)
-			l_error_fwd_cent := (forward_deriv - central_deriv).abs
+			l_error_fwd_cent := (a_forward_deriv - central_deriv).abs
 			l_error_bwd_cent := (backward_deriv - central_deriv).abs
 			if l_error_fwd_cent >= l_error_bwd_cent then
 				l_error_bound := l_error_fwd_cent

@@ -27,11 +27,11 @@ feature {NONE} -- Attributes
 
 feature -- Derivative Computation
 
-	forward_difference (f: FUNCTION [REAL_64, REAL_64]; x: REAL_64): REAL_64
+	forward_difference (a_f: FUNCTION [REAL_64, REAL_64]; x: REAL_64): REAL_64
 			-- Compute derivative using forward difference formula
 			-- f'(x) ≈ (f(x + h) - f(x)) / h
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			x_valid: not x.is_nan
 		local
 			l_h: REAL_64
@@ -39,18 +39,18 @@ feature -- Derivative Computation
 			l_f_xh: REAL_64
 		do
 			l_h := step_calculator.compute_step_size (x)
-			l_f_x := f.item (x)
-			l_f_xh := f.item (x + l_h)
+			l_f_x := a_f.item (x)
+			l_f_xh := a_f.item (x + l_h)
 			Result := (l_f_xh - l_f_x) / l_h
 		ensure
 			result_not_nan: not Result.is_nan
 		end
 
-	backward_difference (f: FUNCTION [REAL_64, REAL_64]; x: REAL_64): REAL_64
+	backward_difference (a_f: FUNCTION [REAL_64, REAL_64]; x: REAL_64): REAL_64
 			-- Compute derivative using backward difference formula
 			-- f'(x) ≈ (f(x) - f(x - h)) / h
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			x_valid: not x.is_nan
 		local
 			l_h: REAL_64
@@ -58,18 +58,18 @@ feature -- Derivative Computation
 			l_f_xh: REAL_64
 		do
 			l_h := step_calculator.compute_step_size (x)
-			l_f_x := f.item (x)
-			l_f_xh := f.item (x - l_h)
+			l_f_x := a_f.item (x)
+			l_f_xh := a_f.item (x - l_h)
 			Result := (l_f_x - l_f_xh) / l_h
 		ensure
 			result_not_nan: not Result.is_nan
 		end
 
-	central_difference (f: FUNCTION [REAL_64, REAL_64]; x: REAL_64): REAL_64
+	central_difference (a_f: FUNCTION [REAL_64, REAL_64]; x: REAL_64): REAL_64
 			-- Compute derivative using central difference formula (most accurate)
 			-- f'(x) ≈ (f(x + h) - f(x - h)) / (2h)
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			x_valid: not x.is_nan
 		local
 			l_h: REAL_64
@@ -77,19 +77,19 @@ feature -- Derivative Computation
 			l_f_xhm: REAL_64
 		do
 			l_h := step_calculator.compute_step_size (x)
-			l_f_xh := f.item (x + l_h)
-			l_f_xhm := f.item (x - l_h)
+			l_f_xh := a_f.item (x + l_h)
+			l_f_xhm := a_f.item (x - l_h)
 			Result := (l_f_xh - l_f_xhm) / (2.0 * l_h)
 		ensure
 			result_not_nan: not Result.is_nan
 		end
 
-	compute_with_comparison (f: FUNCTION [REAL_64, REAL_64]; x: REAL_64;
+	compute_with_comparison (a_f: FUNCTION [REAL_64, REAL_64]; x: REAL_64;
 							tolerance: REAL_64): DERIVATIVE_RESULT
 			-- Compute derivative using all three methods and return result with error bound
 			-- Automatically analyzes convergence
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			x_valid: not x.is_nan
 			tolerance_positive: tolerance > 0.0
 		local
@@ -99,9 +99,9 @@ feature -- Derivative Computation
 			l_analysis: CONVERGENCE_RESULT
 		do
 			-- Compute all three methods
-			l_fwd := forward_difference (f, x)
-			l_bwd := backward_difference (f, x)
-			l_cent := central_difference (f, x)
+			l_fwd := forward_difference (a_f, x)
+			l_bwd := backward_difference (a_f, x)
+			l_cent := central_difference (a_f, x)
 
 			-- Analyze convergence
 			l_analysis := analyzer.analyze (l_fwd, l_bwd, l_cent, tolerance)
@@ -116,13 +116,13 @@ feature -- Derivative Computation
 
 feature -- Partial Derivatives
 
-	partial_derivative (f: FUNCTION [ARRAY [REAL_64], REAL_64];
+	partial_derivative (a_f: FUNCTION [ARRAY [REAL_64], REAL_64];
 					  point: ARRAY [REAL_64]; var_index: INTEGER;
 					  tolerance: REAL_64): REAL_64
 			-- Compute partial derivative ∂f/∂x_i at given point
 			-- Perturbs x_i while holding other variables constant
 		require
-			f_not_void: f /= Void
+			f_not_void: a_f /= Void
 			point_not_void: point /= Void
 			point_not_empty: point.count > 0
 			var_index_valid: var_index >= 1 and var_index <= point.count
@@ -147,9 +147,9 @@ feature -- Partial Derivatives
 			l_point_minus [var_index] := point [var_index] - l_h
 
 			-- Evaluate function at perturbed points
-			l_f_base := f.item (point)
-			l_f_plus := f.item (l_point_plus)
-			l_f_minus := f.item (l_point_minus)
+			l_f_base := a_f.item (point)
+			l_f_plus := a_f.item (l_point_plus)
+			l_f_minus := a_f.item (l_point_minus)
 
 			-- Central difference formula
 			Result := (l_f_plus - l_f_minus) / (2.0 * l_h)
