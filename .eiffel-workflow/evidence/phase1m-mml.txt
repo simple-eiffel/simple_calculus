@@ -1,0 +1,48 @@
+# Phase 1m MML Coverage Report
+# Project: D:\prod\simple_calculus
+# Date: 2026-02-06
+# Mode: retrofit
+
+## Collection Attributes Found
+| Class | Attribute | Type | MML Type |
+|-------|-----------|------|----------|
+| (none) | — | — | — |
+
+No collection attributes found in any of the 9 source classes.
+
+## Classes Scanned
+| Class | Attributes | Notes |
+|-------|-----------|-------|
+| SIMPLE_CALCULUS | (none) | Stateless facade; creates local calculators |
+| CONVERGENCE_ANALYZER | default_tolerance: REAL_64 | Stateless utility with one constant |
+| CONVERGENCE_RESULT | error_bound: REAL_64, status: INTEGER | Immutable value object |
+| CONVERGENCE_STATUS | converged/warning/failed: INTEGER | Constants-only enum |
+| DERIVATIVE_CALCULATOR | step_calculator: STEP_SIZE_CALCULATOR, analyzer: CONVERGENCE_ANALYZER | Holds utility references, no collections |
+| DERIVATIVE_RESULT | value: REAL_64, error_bound: REAL_64, convergence_status: INTEGER | Immutable value object |
+| INTEGRAL_CALCULATOR | max_iterations: INTEGER | Single scalar attribute |
+| INTEGRAL_RESULT | value: REAL_64, error_bound: REAL_64, iterations: INTEGER | Immutable value object |
+| STEP_SIZE_CALCULATOR | math: SIMPLE_MATH | Single utility reference |
+
+## Model Queries Added/Verified
+| Class | Query | MML Type | Status |
+|-------|-------|----------|--------|
+| (none) | — | — | N/A |
+
+## Contracts Strengthened
+- Postconditions added/enriched: 0
+- Preconditions added/enriched: 0
+- Frame conditions added: 0
+- Invariants added/enriched: 0
+
+## ECF
+No changes needed - simple_mml dependency not required (no MML types used).
+
+## Compilation
+N/A - No source changes made.
+
+## Coverage Assessment
+FULL (vacuously)
+
+This is a pure numerical computation library with zero collection attributes.
+All data is scalar (REAL_64, INTEGER, BOOLEAN) or references to stateless utility objects.
+All result classes are immutable after creation. No MML enrichment is applicable.
